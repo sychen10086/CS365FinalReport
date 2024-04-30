@@ -1,22 +1,20 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Step 1: Load the CSV data into pandas DataFrames
-china_data_path = './china_data.csv'
-japan_data_path = './japan_data.csv'
+data_pricestats_bpp_series = pd.read_csv('data_pricestats_bpp_series.csv')
+# Filter data for China and extract relevant columns for analysis
+china_data = data_pricestats_bpp_series[data_pricestats_bpp_series['country'] == 'CHINA_S'][['date', 'annualCPI', 'annualPS']]
 
-china_data = pd.read_csv(china_data_path)
-japan_data = pd.read_csv(japan_data_path)
+# Dropping rows with NaN values in the inflation rates for a cleaner analysis
+china_data.dropna(subset=['annualCPI', 'annualPS'], inplace=True)
 
-# Step 2: Convert 'date' columns to datetime format for proper time-series plotting
-china_data['date'] = pd.to_datetime(china_data['date'])
-japan_data['date'] = pd.to_datetime(japan_data['date'])
+# Filter data for Japan and extract relevant columns for analysis
+japan_data = data_pricestats_bpp_series[data_pricestats_bpp_series['country'] == 'JAPAN'][['date', 'annualCPI', 'annualPS']]
 
-# Step 3: Handling missing values if necessary
-china_data.fillna(method='ffill', inplace=True)  # Forward fill to propagate last valid observation
-japan_data.fillna(method='ffill', inplace=True)  # Forward fill
+# Dropping rows with NaN values in the inflation rates for a cleaner analysis
+japan_data.dropna(subset=['annualCPI', 'annualPS'], inplace=True)
 
-# Step 4: Create the plot
+# Create the plot
 plt.figure(figsize=(12, 6))
 plt.plot(china_data['date'], china_data['annualCPI'], label='China CPI Inflation Rate', marker='o', linestyle='-')
 plt.plot(china_data['date'], china_data['annualPS'], label='China PriceStats Inflation Rate', marker='x', linestyle='--')
@@ -28,6 +26,6 @@ plt.ylabel('Annual Inflation Rate (%)')
 plt.legend()
 plt.grid(True)
 
-# Step 5: Save the plot as a PNG file
-image_path = "./china_japan_inflation_trends.png"
+# Save the plot as a PNG file
+image_path = "/mnt/data/china_japan_inflation_trends.png"
 plt.savefig(image_path)
