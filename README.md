@@ -1,4 +1,4 @@
 # CS365FinalReport
-Codes and DataSets related to Shangyuan Chen's CS365 Final Report
+This repository contains codes and dataSets related to Shangyuan Chen's CS365 Final Report.
 
-Main codes are in Analysis_And_Graph.py and the mainly used csv file is 
+Main codes are in Analysis_And_Graphs.py and the mainly used csv file is pricestats_bpp_series.csv.
